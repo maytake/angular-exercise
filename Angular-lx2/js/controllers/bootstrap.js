@@ -28,9 +28,88 @@
       isFirstOpen: true,
       isFirstDisabled: false
     };
-  }])
-  ; 
-  app.controller('AlertDemoCtrl', ['$scope', function($scope) {
+  }]);
+app.controller('TableDemoCtrl', ['$scope', '$modal', function($scope, $modal) {
+    $scope.tableTitle = '分页表格';
+
+    $scope.students = [
+        {username:'张三', gender:'男', age: 30},
+        {username:'丽丝', gender:'女', age: 18},
+        {username:'王武', gender:'男', age: 24},
+        {username:'赵六', gender:'男', age: 24},
+        {username:'老王', gender:'男', age: 24},
+        {username:'李四', gender:'男', age: 24}
+    ];
+
+    $scope.currentStudents = [];
+    // 分页
+    $scope.page = 1;
+    $scope.maxSize = 3;
+    $scope.itemsPerPage = 2;
+    $scope.totalItems = $scope.students.length;
+
+    getCurrentStudents();
+
+    // 返回当前页对应的数据
+    function getCurrentStudents() {
+        var start = ($scope.page - 1) * $scope.itemsPerPage;
+        $scope.currentStudents = $scope.students.slice(start, start + $scope.itemsPerPage);
+    }
+
+    // 切换分页
+    $scope.changePage = function() {
+        getCurrentStudents();
+    }
+
+    $scope.addStudent = function () {
+        $modal.open({
+            templateUrl: 'tpl/addData.html',
+            controller: 'addStudentModal'
+        }).result.then(function (rs) {
+            if(rs.message == 'ok'){
+                console.log($scope.students);
+            }
+
+
+        })
+    }
+    // 删除
+    $scope.remove = function(index) {
+        $scope.students.splice(index, 1);
+    }
+
+
+
+}]);
+
+
+
+app.controller('addStudentModal',  ['$scope', '$modalInstance', function($scope, $modalInstance) {
+
+    $scope.username = '';
+    $scope.gender = '男';
+    $scope.age = '';
+
+    $scope.ok = function() {
+        $modalInstance.close({
+            message: 'ok',
+            data: {
+                username: $scope.username,
+                gender: $scope.gender,
+                age: $scope.age
+            }
+        });
+    }
+
+    $scope.close = function() {
+        $modalInstance.close({
+            message: 'cancel'
+        });
+    }
+
+}]);
+
+app.controller('AlertDemoCtrl', ['$scope', function($scope) {
     $scope.alerts = [
       { type: 'success', msg: 'Well done! You successfully read this important alert message.' },
       { type: 'info', msg: 'Heads up! This alert needs your attention, but it is not super important.' },

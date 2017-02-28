@@ -50,6 +50,10 @@ angular.module('app')
                 url: '/static',
                 templateUrl: 'tpl/info.html'
             })
+            .state('app.tabdome', {
+                url: '/tabdemo',
+                templateUrl: 'tpl/tabdemo.html'
+            })
             .state('app.calendar', {
                 url: '/calendar',
                 templateUrl: 'tpl/app_calendar.html',

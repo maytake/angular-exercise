@@ -1,0 +1,64 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">表格实例</h1>
+</div>
+<div class="wrapper-md"  ng-controller="TableDemoCtrl">
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+     {{tableTitle}}
+    </div>
+    <div class="row wrapper">
+      <div class="col-sm-5 m-b-xs">
+
+        <button class="btn btn-sm btn-default" ng-click="addStudent()">添加</button>
+      </div>
+      <div class="col-sm-4">
+      </div>
+      <div class="col-sm-3">
+        <div class="input-group">
+          <input type="text" class="input-sm form-control" placeholder="Search">
+          <span class="input-group-btn">
+            <button class="btn btn-sm btn-default" type="button">Go!</button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped b-t b-light">
+
+        <thead>
+        <tr>
+          <th>编号</th>
+          <th>姓名</th>
+          <th>性别</th>
+          <th>年龄</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="v in currentStudents">
+          <td>{{$index}}</td>
+          <td>{{v.username}}</td>
+          <td>{{v.gender}}</td>
+          <td>{{v.age}}</td>
+          <td>
+            <button class="btn btn-danger" ng-click="remove($index)">
+              <span class="glyphicon glyphicon-trash"></span>
+              删除
+              </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <footer class="panel-footer">
+      <div class="row">
+
+        <div class="col-sm-12 text-right text-center-xs">
+          <ul uib-pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="page" max-size="maxSize" class="pagination-sm" ng-change="changePage()"></ul>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
